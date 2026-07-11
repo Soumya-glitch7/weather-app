@@ -1,15 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import SearchBar from './components/SearchBar'
 
 function App() {
-
-  const defaultURL = "https://api.openweathermap.org/data/2.5/weather?q={CITY_NAME}&appid=6d11e6818c1295c611bcee44e3a9d35f&units=metric"
+  const [city, setCity] = useState("")
+  const [data, setData] = useState(null)
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY
+  
+  const searchWeather = async function fetchWeather() {
+    
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+      if(city.trim() === "") return
+
+      const response = await fetch(url)
+      const result = await response.json()
+      console.log(result)
+
+      setData(result)
+  }
+
+  
 
   return (
     <>
-      <SearchBar />
+      <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} />
     </>
   )
 }

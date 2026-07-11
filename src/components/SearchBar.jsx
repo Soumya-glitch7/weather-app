@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { IoSearch } from "react-icons/io5"
 
-function SearchBar(){
-    const [city, setCity] = useState("")
+function SearchBar({city, setCity, searchWeather, url}){
 
     return(
         <>
@@ -13,10 +12,16 @@ function SearchBar(){
                 maxLength={20}
                 className="border rounded-l-xl h-10 px-2 outline-none bg-gray-200"
                 placeholder="Search a city"
-                value={city}
+                value= {city}
                 onChange={(e)=> setCity(e.target.value)}
+                onKeyDown={(e)=>{
+                    if(e.key === "Enter"){
+                        searchWeather()
+                    }
+                    }
+                }
                 />
-                <button className="border rounded-r-xl h-10 px-3 text-xl bg-gray-400"><IoSearch /></button>
+                <button className="border rounded-r-xl h-10 px-3 text-xl bg-gray-400" onClick={searchWeather}><IoSearch /></button>
             </div>
         </div>
         </>
