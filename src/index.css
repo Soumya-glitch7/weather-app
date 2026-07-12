@@ -2,6 +2,11 @@
 
 @theme {
   --font-tanker: "Tanker", sans-serif;
+  --font-segoe: "Segoe UI", sans-serif;
+}
+
+@theme {
+  --font-cabinet: "Cabinet Grotesk", sans-serif;
 }
 
 @font-face {
@@ -9,6 +14,25 @@
   src: url("./assets/fonts/Tanker-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
+}
+
+
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("./assets/fonts/CabinetGrotesk-Regular.woff2") format("woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("./assets/fonts/CabinetGrotesk-Bold.woff2") format("woff2");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("./assets/fonts/CabinetGrotesk-Extrabold.woff2") format("woff2");
+  font-weight: 800;
 }
 
 body {
