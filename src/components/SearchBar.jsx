@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { IoSearch } from "react-icons/io5"
+import "weather-icons/css/weather-icons.css";
 
 function SearchBar({city, setCity, searchWeather}){
 
     return(
         <>
-        <div className=" border-0 flex flex-col justify-center items-center gap-12 min-h-[80vh] bg-[url('/fullclouds.png')] bg-cover bg-center">
+        <div className=" border-0 flex flex-col justify-center items-center gap-12 min-h-[50vh] bg-[url('/fullclouds.png')] bg-cover bg-center">
             <h1 className="text-7xl font-bold text-blue-900 font-tanker">Welcome to WeatherToday</h1>
             <div className="scale-140 flex">
                 <input

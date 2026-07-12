@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import SearchBar from './components/SearchBar'
+import WeatherCard from './components/WeatherCard'
 
 function App() {
   const [city, setCity] = useState("")
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [weatherCity, setWeatherCity] = useState("")
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY
   
   const searchWeather = async function fetchWeather() {
@@ -28,10 +28,9 @@ function App() {
         throw new Error(result.message)
       }
       console.log(result)
-      
+
       setData(result)
       setCity("")
-      setWeatherCity(city)
     }
 
     catch(err){
@@ -49,6 +48,7 @@ function App() {
   return (
     <>
       <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} />
+      {data && <WeatherCard data= {data} />}
     </>
   )
 }
