@@ -11,18 +11,22 @@ function App() {
   
   const searchWeather = async function fetchWeather() {
     
-    if(city.trim() === "") return
 
     let result
 
     try {
-        
+      
       setLoading(true)  
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
-
-      const response = await fetch(url)
 
       
+      
+      const searchedCity = city.trim() || "Delhi";
+
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchedCity}&appid=${apiKey}&units=metric`;
+      
+      const response = await fetch(url)
+
+
       result = await response.json()
       if(!response.ok){
         throw new Error(result.message)
@@ -32,23 +36,68 @@ function App() {
       setData(result)
       setCity("")
     }
-
+    
     catch(err){
       console.log(err)
     }
-
+    
     finally{
       setLoading(false)
     }
-
+    
   }
-
   
+const weatherBackgrounds = {
+  '01d': '/backgrounds/sunny.png',
+  '01n': '/backgrounds/night.png',
+
+  '02d': '/backgrounds/cloudy.png',
+  '02n': '/backgrounds/night.png',
+
+  '03d': '/backgrounds/cloudy.png',
+  '03n': '/backgrounds/night.png',
+  
+  '04d': '/backgrounds/cloudy.png',
+  '04n': '/backgrounds/night.png',
+  
+  '09d': '/backgrounds/rain.png',
+  '09n': '/backgrounds/rain.png',
+  
+  '10d': '/backgrounds/rain.png',
+  '10n': '/backgrounds/rain.png',
+  
+  '11d': '/backgrounds/thunder.png',
+  '11n': '/backgrounds/thunder.png',
+  
+  '13d': '/backgrounds/snow.png',
+  '13n': '/backgrounds/snow.png',
+
+  '50d': '/backgrounds/mist.png',
+  '50n': '/backgrounds/mist.png',
+};
+
+const background = data
+? weatherBackgrounds[data.weather[0].icon]
+: '/backgrounds/default.png'
+
+useEffect(()=>{
+  searchWeather()
+},[])
 
   return (
     <>
-      <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} />
-      {data && <WeatherCard data= {data} />}
+        <div className= "min-h-screen bg-cover bg-center  bg-fixed bg-no-repeat overflow-y-auto relative "
+          style={{
+            backgroundImage: `url(${background})`,
+          }}
+          >
+          <div className='bg-black/35 absolute inset-0 '></div>  
+
+          <div className="relative z-10">
+            <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} />
+            {data && <WeatherCard data= {data} />}
+          </div>
+        </div>
     </>
   )
 }

@@ -38,3 +38,99 @@
 body {
   font-family: "Tanker", sans-serif;
 }
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes rain {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.animate-rain {
+  animation: rain 1.5s ease-in-out infinite;
+}
+
+@keyframes flash {
+  0%, 90%, 100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 0.2;
+  }
+  95% {
+    opacity: 1;
+  }
+}
+
+.animate-flash {
+  animation: flash 2s infinite;
+}
+
+@keyframes snow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(15deg);
+  }
+}
+
+.animate-snow {
+  animation: snow 3s ease-in-out infinite;
+}
+
+@keyframes fog {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(12px);
+  }
+}
+
+.animate-fog {
+  animation: fog 4s ease-in-out infinite;
+}
+
+@keyframes sun-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-sun {
+  animation: sun-spin 10s linear infinite;
+}
+
+@keyframes moon-glow {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px #ffffff);
+  }
+  50% {
+    opacity: 0.75;
+    filter: drop-shadow(0 0 14px #ffffff);
+  }
+}
+
+.animate-moon {
+  animation: moon-glow 3s ease-in-out infinite;
+}

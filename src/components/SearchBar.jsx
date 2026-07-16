@@ -6,12 +6,12 @@ function SearchBar({city, setCity, searchWeather}){
 
     return(
         <>
-        <div className=" border-0 flex flex-col justify-center items-center gap-12 min-h-[50vh] bg-[url('/fullclouds.png')] bg-cover bg-center">
-            <h1 className="text-7xl font-bold text-blue-900 font-tanker">Welcome to WeatherToday</h1>
+        <div className=" border-0 flex flex-col justify-center items-center gap-12 min-h-[50vh] ">
+            <h1 className="text-7xl font-bold text-white font-tanker">Welcome to WeatherToday</h1>
             <div className="scale-140 flex">
                 <input
                 maxLength={20}
-                className="border rounded-l-xl h-10 px-2 outline-none bg-gray-200"
+                className="border rounded-l-xl h-10 px-2 outline-none bg-gray-200 w-60"
                 placeholder="Search a city"
                 value= {city}
                 onChange={(e)=> setCity(e.target.value)}
