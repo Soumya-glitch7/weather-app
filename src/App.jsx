@@ -2,19 +2,25 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import SearchBar from './components/SearchBar'
 import WeatherCard from './components/WeatherCard'
+import FiveDayForecast from './components/FiveDayForecast'
+
 
 function App() {
   const [city, setCity] = useState("")
   const [data, setData] = useState(null)
+  const [datafive, setDataFive] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [result, setResult] = useState(null)
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY
+
+  
   
   const searchWeather = async function fetchWeather() {
     
 
     let result
+    let resultfive
 
     try {
       
@@ -24,17 +30,21 @@ function App() {
       const searchedCity = city.trim() || "Delhi";
 
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchedCity}&appid=${apiKey}&units=metric`;
-      
+
+      const fiveDayUrl=`https://api.openweathermap.org/data/2.5/forecast?q=${searchedCity}&appid=${apiKey}&units=metric`
+
       const response = await fetch(url)
+      const responsefive = await fetch(fiveDayUrl)
 
-
+      resultfive = await responsefive.json()
       result = await response.json()
+      console.log(resultfive)
       console.log(result)
-      setResult(result)
       if(!response.ok){
         throw new Error(result.message)
       }
-
+      
+      setDataFive(resultfive)
       setData(result)
       setCity("")
     }
@@ -48,43 +58,44 @@ function App() {
     }
     
   }
-  
-const weatherBackgrounds = {
-  '01d': '/backgrounds/sunny.png',
-  '01n': '/backgrounds/night.png',
 
-  '02d': '/backgrounds/cloudy.png',
-  '02n': '/backgrounds/night.png',
+  
+  const weatherBackgrounds = {
+    '01d': '/backgrounds/sunny.png',
+    '01n': '/backgrounds/night.png',
 
-  '03d': '/backgrounds/cloudy.png',
-  '03n': '/backgrounds/night.png',
-  
-  '04d': '/backgrounds/cloudy.png',
-  '04n': '/backgrounds/night.png',
-  
-  '09d': '/backgrounds/rain.png',
-  '09n': '/backgrounds/rain.png',
-  
-  '10d': '/backgrounds/rain.png',
-  '10n': '/backgrounds/rain.png',
-  
-  '11d': '/backgrounds/thunder.png',
-  '11n': '/backgrounds/thunder.png',
-  
-  '13d': '/backgrounds/snow.png',
-  '13n': '/backgrounds/snow.png',
+    '02d': '/backgrounds/cloudy.png',
+    '02n': '/backgrounds/night.png',
 
-  '50d': '/backgrounds/mist.png',
-  '50n': '/backgrounds/mist.png',
-};
+    '03d': '/backgrounds/cloudy.png',
+    '03n': '/backgrounds/night.png',
+    
+    '04d': '/backgrounds/cloudy.png',
+    '04n': '/backgrounds/night.png',
+    
+    '09d': '/backgrounds/rain.png',
+    '09n': '/backgrounds/rain.png',
+    
+    '10d': '/backgrounds/rain.png',
+    '10n': '/backgrounds/rain.png',
+    
+    '11d': '/backgrounds/thunder.png',
+    '11n': '/backgrounds/thunder.png',
+    
+    '13d': '/backgrounds/snow.png',
+    '13n': '/backgrounds/snow.png',
 
-const background = data
-? weatherBackgrounds[data.weather[0].icon]
-: '/backgrounds/default.png'
+    '50d': '/backgrounds/mist.png',
+    '50n': '/backgrounds/mist.png',
+  };
 
-useEffect(()=>{
-  searchWeather()
-},[])
+  const background = data
+  ? weatherBackgrounds[data.weather[0].icon]
+  : '/backgrounds/default.png'
+
+  useEffect(()=>{
+    searchWeather()
+  },[])
 
   return (
     <>
