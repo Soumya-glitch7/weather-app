@@ -7,6 +7,8 @@ function App() {
   const [city, setCity] = useState("")
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [result, setResult] = useState(null)
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY
   
   const searchWeather = async function fetchWeather() {
@@ -17,8 +19,7 @@ function App() {
     try {
       
       setLoading(true)  
-
-      
+      setError("")
       
       const searchedCity = city.trim() || "Delhi";
 
@@ -28,17 +29,18 @@ function App() {
 
 
       result = await response.json()
+      console.log(result)
+      setResult(result)
       if(!response.ok){
         throw new Error(result.message)
       }
-      console.log(result)
 
       setData(result)
       setCity("")
     }
     
     catch(err){
-      console.log(err)
+      setError(err)
     }
     
     finally{
@@ -94,7 +96,7 @@ useEffect(()=>{
           <div className='bg-black/35 absolute inset-0 '></div>  
 
           <div className="relative z-10">
-            <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} />
+            <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} error= {error} result={result}/>
             {data && <WeatherCard data= {data} />}
           </div>
         </div>
