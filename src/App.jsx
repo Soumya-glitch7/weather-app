@@ -109,6 +109,7 @@ function App() {
           <div className="relative z-10">
             <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} error= {error} result={result}/>
             {data && <WeatherCard data= {data} />}
+            {data && <FiveDayForecast datafive = {datafive}/>}
           </div>
         </div>
     </>
