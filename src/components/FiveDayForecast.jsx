@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import { WiRaindrop } from "react-icons/wi";
 import {
   WiDaySunny,
@@ -21,10 +21,14 @@ import {
   WiNightAltRain,
   WiCelsius,
 } from "react-icons/wi";
-
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 
 function FiveDayForecast({datafive}){
-
+    
+    
+    const [showLeft, setShowLeft] = useState("hidden")
+    const [showRight, setShowRight] = useState("block")
     const containerRef = useRef(null)
     const weatherIcons = {
         "01d": WiDaySunny,
@@ -97,6 +101,23 @@ function FiveDayForecast({datafive}){
         return time
     }
 
+    const scrollRight = () =>{
+        containerRef.current.scrollBy(
+            {
+                left: 1,
+                behavior: "smooth"
+            }
+        )
+    }
+    
+    const scrollLeft = () =>{
+        containerRef.current.scrollBy({
+                left: -1,
+                behavior: "smooth"
+            })
+    }
+
+
 
     const postcards = groupedForecast[selectedDate].map((obj)=>(
         <div className="w-46 snap-start p-3">
@@ -113,11 +134,31 @@ function FiveDayForecast({datafive}){
         </div>
     ))
 
+    const updateButtons = () => {
+        const container = containerRef.current;
+
+        if (!container) return;
+
+        if (container.scrollLeft <= 0) {
+            setShowLeft("hidden");
+        } else {
+            setShowLeft("block");
+        }
+
+        if (
+            container.scrollLeft + container.clientWidth >=
+            container.scrollWidth - 1
+        ) {
+            setShowRight("hidden");
+        } else {
+            setShowRight("block");
+        }
+    };
 
 
     return(
         <div className="forecastConatiner flex justify-center bg-white p-4">
-            <div className=" w-fit">
+            <div className=" w-fit relative">
                 <div className="flex justify-center border rounded-t-2xl  items-start">
                     <div className="flex gap-2 h-10 mt-1">
                         <button className="border border-b-0 w-25 rounded-t-2xl" onClick={()=> setSelectedDate(dates[0])}>Today</button>
@@ -127,9 +168,11 @@ function FiveDayForecast({datafive}){
                         <button className="border border-b-0 w-25 rounded-t-2xl" onClick={()=> setSelectedDate(dates[4])}>{days[4]}</button>
                     </div>
                 </div>
-                <div className="flex w-230 min-h-50 border border-t-0 rounded-b-2xl items-center overflow-x-auto snap-x snap-mandatory" ref={containerRef}>
+                <div className="flex w-230 min-h-50 border border-t-0 rounded-b-2xl items-center overflow-x-auto snap-x snap-mandatory" onScroll={()=>updateButtons()} ref={containerRef}>
                     {postcards}
                 </div>
+                <button className={`absolute right-0 bottom-0 rounded-br-2xl h-50 w-8 bg-black/20 flex justify-center items-center ${showRight} `} onClick={scrollRight}><IoIosArrowForward /></button>
+                <button className={`absolute left-0 bottom-0 rounded-bl-2xl h-50 w-8 bg-black/20 flex justify-center items-center ${showLeft}`}  onClick={scrollLeft}><IoIosArrowBack /></button>
             </div>
         </div>
     )
