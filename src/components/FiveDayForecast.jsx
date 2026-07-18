@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { WiRaindrop } from "react-icons/wi";
 import {
   WiDaySunny,
@@ -25,7 +25,7 @@ import {
 
 function FiveDayForecast({datafive}){
 
-    
+    const containerRef = useRef(null)
     const weatherIcons = {
         "01d": WiDaySunny,
         "01n": WiNightClear,
@@ -99,13 +99,15 @@ function FiveDayForecast({datafive}){
 
 
     const postcards = groupedForecast[selectedDate].map((obj)=>(
-        <div className="h-40 w-40 border rounded-2xl flex flex-col justify-center items-center">
-            <div className="text-2xl">{converter(obj.dt_txt)}</div>
-            <div className="text-7xl -my-2">{weatherIcon(obj.weather[0].icon)}</div>
-            <div className="flex flex-col items-center">
-                <div className="text-4xl">{obj.main.temp}</div>
-                <div className="flex">
-                    <WiRaindrop className="text-2xl"/> {obj.pop} %
+        <div className="w-46 snap-start p-3">
+            <div className="h-40 w-40 border rounded-2xl flex flex-col justify-center items-center shrink-0">
+                <div className="text-2xl">{converter(obj.dt_txt)}</div>
+                <div className="text-7xl -my-2">{weatherIcon(obj.weather[0].icon)}</div>
+                <div className="flex flex-col items-center">
+                    <div className="text-4xl">{obj.main.temp}</div>
+                    <div className="flex">
+                        <WiRaindrop className="text-2xl"/> {obj.pop} %
+                    </div>
                 </div>
             </div>
         </div>
@@ -117,15 +119,15 @@ function FiveDayForecast({datafive}){
         <div className="forecastConatiner flex justify-center bg-white p-4">
             <div className=" w-fit">
                 <div className="flex justify-center border rounded-t-2xl  items-start">
-                    <div className="flex gap-2 h-15 mt-1">
-                        <button className="border border-b-0 w-25 rounded-t-2xl text-xl" onClick={()=> setSelectedDate(dates[0])}>Today</button>
-                        <button className="border border-b-0 w-25 rounded-t-2xl text-xl" onClick={()=> setSelectedDate(dates[1])}>Tommorow</button>
-                        <button className="border border-b-0 w-25 rounded-t-2xl text-xl" onClick={()=> setSelectedDate(dates[2])}>{days[2]}</button>
-                        <button className="border border-b-0 w-25 rounded-t-2xl text-xl" onClick={()=> setSelectedDate(dates[3])}>{days[3]}</button>
-                        <button className="border border-b-0 w-25 rounded-t-2xl text-xl" onClick={()=> setSelectedDate(dates[4])}>{days[4]}</button>
+                    <div className="flex gap-2 h-10 mt-1">
+                        <button className="border border-b-0 w-25 rounded-t-2xl" onClick={()=> setSelectedDate(dates[0])}>Today</button>
+                        <button className="border border-b-0 w-25 rounded-t-2xl" onClick={()=> setSelectedDate(dates[1])}>Tommorow</button>
+                        <button className="border border-b-0 w-25 rounded-t-2xl" onClick={()=> setSelectedDate(dates[2])}>{days[2]}</button>
+                        <button className="border border-b-0 w-25 rounded-t-2xl" onClick={()=> setSelectedDate(dates[3])}>{days[3]}</button>
+                        <button className="border border-b-0 w-25 rounded-t-2xl" onClick={()=> setSelectedDate(dates[4])}>{days[4]}</button>
                     </div>
                 </div>
-                <div className="grid grid-cols-8 min-h-50 border border-t-0 rounded-b-2xl items-center px-6 gap-6">
+                <div className="flex w-230 min-h-50 border border-t-0 rounded-b-2xl items-center overflow-x-auto snap-x snap-mandatory" ref={containerRef}>
                     {postcards}
                 </div>
             </div>
