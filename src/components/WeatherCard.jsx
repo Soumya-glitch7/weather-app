@@ -177,7 +177,7 @@ function WeatherCard({data}){
     return(
         <>
 
-        <div className="flex min-h-105 min-w-120 justify-center  p-4 text-white">
+        <div className="flex h-fit justify-center  p-4 text-white">
             <div className="box flex flex-col border-0 rounded-3xl h-full w-full bg-linear-to-r from-black  to-slate-900 shadow-[0_0_5px_white, 0_0_7px_white]">
                 <div className="header">
                     <div className="flex justify-between p-2 px-6 text-lg items-center w-full">
