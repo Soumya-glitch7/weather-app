@@ -4,7 +4,7 @@ function AqiMeter({dataAqi , dataAqiValue}){
 
     const aqiValue = dataAqiValue.data.aqi
 
-    const aqiPercentage = (aqiValue / 500) * 100
+    const aqiPercentage = ((aqiValue / 500) * 100)
 
     return(
         <>
@@ -33,7 +33,11 @@ function AqiMeter({dataAqi , dataAqiValue}){
                             <div className="bg-[#E9426D] flex-1"></div>
                             <div className="bg-[#A734B8] flex-1"></div>
                             <div className="bg-[#C81332] flex-1"></div>
-                            <div className={`rounded-4xl bg-gray-300 left-[${aqiPercentage}] h-2 w-2 absolute shadow-[0_0_10px_6px_rgba(0,0,0,0.5)] z-10 -top-0.5`}></div>
+                            <div className={`rounded-4xl bg-gray-300  h-2 w-2 absolute shadow-[0_0_10px_6px_rgba(0,0,0,0.5)] z-10 -top-0.5`}
+                                style={{
+                                    left : `${aqiPercentage}%`
+                                }}
+                            ></div>
                         </div>
                     </div>
                 </div>
