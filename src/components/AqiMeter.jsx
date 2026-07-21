@@ -12,12 +12,84 @@ function AqiMeter({dataAqi, dataAqiValue}){
 
     const aqiPercentage = ((aqiValue / 500) * 100)
 
+    const getPointerPosition = () =>{
+        if(aqiValue <= 50){
 
+            const percentInBucket = (aqiValue/50) * 100
+            
+            const howAhead = percentInBucket*16.67 
+            return howAhead
+        }
 
+        if(aqiValue > 50 && aqiValue <=100){
+            const checkpoint = 50
+            const outOfFifty = aqiValue - checkpoint
+            const percentInBucket = (outOfFifty/50)
+            
+            const howAheadInBucket = percentInBucket*16.67
+            
+            const percentTillCheckpoint = (checkpoint/300)*100
+            
+            const howAhead = percentTillCheckpoint + howAheadInBucket
+            return howAhead
+        }
+        
+        if(aqiValue > 100 && aqiValue <=150){
+            const checkpoint = 100
+            const outOfFifty = aqiValue - checkpoint
+            const percentInBucket = (outOfFifty/50)
+            
+            const howAheadInBucket = percentInBucket*16.67
+            
+            const percentTillCheckpoint = (checkpoint/300)*100
+            
+            const howAhead = percentTillCheckpoint + howAheadInBucket
+            return howAhead
+        }
+
+        if(aqiValue > 150 && aqiValue <=200){
+            const checkpoint = 150
+            const outOfFifty = aqiValue - checkpoint
+            const percentInBucket = (outOfFifty/50)
+            
+            const howAheadInBucket = percentInBucket*16.67
+            
+            const percentTillCheckpoint = (checkpoint/300)*100
+            
+            const howAhead = percentTillCheckpoint + howAheadInBucket
+            return howAhead
+        }
+
+        if(aqiValue > 200 && aqiValue <=250){
+            const checkpoint = 200
+            const outOfFifty = aqiValue - checkpoint
+            const percentInBucket = (outOfFifty/50)
+            
+            const howAheadInBucket = percentInBucket*16.67
+
+            const percentTillCheckpoint = (checkpoint/300)*100
+
+            const howAhead = percentTillCheckpoint + howAheadInBucket
+            return howAhead
+        }
+
+        if(aqiValue > 250 && aqiValue <=300){
+            const checkpoint = 250
+            const outOfFifty = aqiValue - checkpoint
+            const percentInBucket = (outOfFifty/50)
+
+            const howAheadInBucket = percentInBucket*16.67
+
+            const percentTillCheckpoint = (checkpoint/300)*100
+
+            const howAhead = percentTillCheckpoint + howAheadInBucket
+            return howAhead
+        }
+    }
 
     return(
         <>
-            <div className="container p-4">
+            <div className="container p-4 text-white">
                 <div className="border rounded-2xl h-61 p-8 px-16">
                     <div className="flex">
                         <div className="text-8xl flex items-baseline">
@@ -30,8 +102,8 @@ function AqiMeter({dataAqi, dataAqiValue}){
                         </div>
                     </div>
                     <div className="flex text-xl mt-1">
-                        <div><span >PM2.5:</span> {dataAqi.list[0].components.pm2_5}</div>
-                        <div className="ml-auto"><span>PM10:</span> {dataAqi.list[0].components.pm10}</div>
+                        <div><span >PM2.5: </span> {dataAqi.list[0].components.pm2_5}</div>
+                        <div className="ml-auto"><span>PM10: </span> {dataAqi.list[0].components.pm10}</div>
                     </div>
                     
                     <div className=" flex flex-col py-6 z-0">
@@ -44,7 +116,7 @@ function AqiMeter({dataAqi, dataAqiValue}){
                             <div className="bg-[#C81332] flex-1"></div>
                             <div className={`rounded-4xl bg-gray-300  h-2 w-2 absolute shadow-[0_0_10px_6px_rgba(0,0,0,0.5)] z-10 -top-0.5`}
                                 style={{
-                                    left : `${aqiPercentage}%`
+                                    left : `${getPointerPosition()}%`
                                 }}
                             ></div>
                         </div>
