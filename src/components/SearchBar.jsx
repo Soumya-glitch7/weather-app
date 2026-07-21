@@ -23,7 +23,9 @@ function SearchBar({city, setCity, searchWeather, error, result}){
                         }
                     }
                     />
-                    <button className="border rounded-r-xl h-14 px-3 text-xl bg-gray-400" onClick={searchWeather}><IoSearch /></button>
+                    <button className="border rounded-r-xl h-14 px-3 text-xl bg-gray-400" onClick={() =>{
+                        searchWeather()
+                        }}><IoSearch /></button>
                 </div>
                 {error && (<div className="text-xs pl-2 text-red-600 font-cabinet">
                     <p>*{error.message}</p>    
@@ -31,9 +33,6 @@ function SearchBar({city, setCity, searchWeather, error, result}){
                 }
             </div>
           
-            
-
-
         </div>
         </>
     )

@@ -10,13 +10,14 @@ function App() {
   const [city, setCity] = useState("")
   const [data, setData] = useState(null)
   const [datafive, setDataFive] = useState(null)
-  const [dataAqi, setDataAQI] = useState(null)
-  const [dataAqiValue, setDataAQIValue] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [result, setResult] = useState(null)
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY
   const aqiApiKey = import.meta.env.VITE_AQI_API_KEY
+
+  const [ dataAqi,setDataAQI ] = useState(null)
+  const [ dataAqiValue,setDataAQIValue ] = useState(null)
 
   
   
@@ -25,8 +26,6 @@ function App() {
 
     let result
     let resultfive
-    let resultaqi
-    let resultaqivalue
 
     try {
       
@@ -43,30 +42,20 @@ function App() {
 
       const fiveDayUrl=`https://api.openweathermap.org/data/2.5/forecast?q=${searchedCity}&appid=${apiKey}&units=metric`
       
-      const AQIValueUrl=`https://api.waqi.info/feed/${searchedCity}/?token=${aqiApiKey}`
       
-      const AQIUrl=`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
       const response = await fetch(url)
       const responsefive = await fetch(fiveDayUrl)
-      const responseAQI = await fetch(AQIUrl)
-      const responseAQIvalue = await fetch(AQIValueUrl)
 
       resultfive = await responsefive.json()
       result = await response.json()
-      resultaqi = await responseAQI.json()
-      resultaqivalue = await responseAQIvalue.json()
       console.log(resultfive)
       console.log(result)
-      console.log(resultaqi)
-      console.log(resultaqivalue)
       if(!response.ok){
         throw new Error(result.message)
       }
       
       setDataFive(resultfive)
       setData(result)
-      setDataAQI(resultaqi)
-      setDataAQIValue(resultaqivalue)
       setCity("")
     }
     
@@ -79,6 +68,31 @@ function App() {
     }
     
   }
+
+  const aqiAPI = async function fetchAQI() {
+      let resultaqi
+      let resultaqivalue
+
+      const lat = data ? (data.coord.lat) : (28.6667)
+      const lon = data ? (data.coord.lon) : (77.2167)
+
+      const AQIValueUrl=`https://api.waqi.info/feed/geo:${lat};${lon}/?token=${aqiApiKey}`
+      const AQIUrl=`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+      
+      
+      
+      const responseAQI = await fetch(AQIUrl)
+      const responseAQIvalue = await fetch(AQIValueUrl)
+
+      resultaqi = await responseAQI.json()
+      resultaqivalue = await responseAQIvalue.json()
+
+      console.log(resultaqi)
+      console.log(resultaqivalue)        
+
+      setDataAQI(resultaqi)
+      setDataAQIValue(resultaqivalue)
+    }
 
   
   const weatherBackgrounds = {
@@ -118,6 +132,10 @@ function App() {
     searchWeather()
   },[])
 
+  useEffect(()=>{
+    aqiAPI()
+  },[data])
+
   return (
     <>
         <div className= "min-h-screen bg-cover bg-center  bg-fixed bg-no-repeat overflow-y-auto relative "
@@ -132,7 +150,7 @@ function App() {
             {data && <WeatherCard data= {data} />}
             <div className="flex">
               {data && <FiveDayForecast datafive = {datafive}/>}
-              {data && <AqiMeter dataAqi = {dataAqi} dataAqiValue = {dataAqiValue}/>}
+              {data && <AqiMeter dataAqi = {dataAqi} dataAqiValue={dataAqiValue}/>}
             </div>
           </div>
         </div>

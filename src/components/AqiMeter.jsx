@@ -1,18 +1,27 @@
-function AqiMeter({dataAqi , dataAqiValue}){
+import { useEffect, useState } from "react"
 
+function AqiMeter({dataAqi, dataAqiValue}){
+    
+    if(!dataAqi || !dataAqiValue){
+        return
+    }
+    
     const aqiReviews = ["Good", "Fair", "Moderate", "Poor", "Very Poor"] 
 
     const aqiValue = dataAqiValue.data.aqi
 
     const aqiPercentage = ((aqiValue / 500) * 100)
 
+
+
+
     return(
         <>
-            <div className="container bg-white p-4">
+            <div className="container p-4">
                 <div className="border rounded-2xl h-61 p-8 px-16">
                     <div className="flex">
                         <div className="text-8xl flex items-baseline">
-                            {aqiValue}
+                            {aqiValue || "N/A"}
                             <div className="text-lg">AQI(US)</div>
                         </div>
                         <div className="flex flex-col ml-auto mt-4 items-center">
