@@ -77,7 +77,7 @@ function App() {
       const lon = data ? (data.coord.lon) : (77.2167)
 
       const AQIValueUrl=`https://api.waqi.info/feed/geo:${lat};${lon}/?token=${aqiApiKey}`
-      const AQIUrl=`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+      const AQIUrl=`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
       
       
       

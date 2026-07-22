@@ -134,3 +134,26 @@ body {
 .animate-moon {
   animation: moon-glow 3s ease-in-out infinite;
 }
+
+@keyframes drift {
+    0% {
+        transform: translate(-25%, 0px);
+    }
+
+    25% {
+        transform: translate(15%, -8px);
+    }
+
+    50% {
+        transform: translate(55%, 5px);
+    }
+
+    75% {
+        transform: translate(90%, -6px);
+    }
+
+    100% {
+        transform: translate(125%, 0px);
+    }
+}
+
