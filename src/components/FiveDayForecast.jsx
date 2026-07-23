@@ -121,7 +121,7 @@ function FiveDayForecast({datafive}){
 
     const postcards = groupedForecast[selectedDate].map((obj)=>(
         <div className="w-46 snap-start p-3">
-            <div className="h-40 w-40 border-0 rounded-2xl flex flex-col justify-center items-center shrink-0 bg-[#617e5f] text-white">
+            <div className="h-40 w-40 border-0 rounded-2xl flex flex-col justify-center items-center shrink-0 bg-[#d5d3d3] text-black">
                 <div className="text-2xl">{converter(obj.dt_txt)}</div>
                 <div className="text-7xl -my-2">{weatherIcon(obj.weather[0].icon)}</div>
                 <div className="flex flex-col items-center">

@@ -4,6 +4,8 @@ import SearchBar from './components/SearchBar'
 import WeatherCard from './components/WeatherCard'
 import FiveDayForecast from './components/FiveDayForecast'
 import AqiMeter from './components/AqiMeter'
+import CountUpModule from "react-countup";
+const CountUp = CountUpModule.default;
 
 
 function App() {
@@ -145,12 +147,14 @@ function App() {
           >
           <div className='bg-black/35 absolute inset-0 '></div>  
 
-          <div className="relative z-10">
+          <div className="relative z-10 px-12">
             <SearchBar city={city} setCity={setCity} searchWeather={searchWeather} error= {error} result={result}/>
-            {data && <WeatherCard data= {data} />}
-            <div className="flex">
-              {data && <FiveDayForecast datafive = {datafive}/>}
-              {data && <AqiMeter dataAqi = {dataAqi} dataAqiValue={dataAqiValue}/>}
+            <div className='bg-black/70 rounded-2xl mb-4'>
+              {data && <WeatherCard data= {data} />}
+              <div className="flex">
+                {data && <FiveDayForecast datafive = {datafive}/>}
+                {data && <AqiMeter dataAqi = {dataAqi} dataAqiValue={dataAqiValue}/>}
+              </div>
             </div>
           </div>
         </div>

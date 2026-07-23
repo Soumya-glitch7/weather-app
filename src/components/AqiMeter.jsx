@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
+import CountUpModule from "react-countup";
+const CountUp = CountUpModule.default;
 
 function AqiMeter({dataAqi, dataAqiValue}){
     
     if(!dataAqi || !dataAqiValue){
-        return 
+        return null
     }
 
     
@@ -115,54 +117,62 @@ function AqiMeter({dataAqi, dataAqiValue}){
     };
 
 
-
     return(
         <>
             <div className="container p-4 text-white">
                 
-                <div className={`border rounded-2xl h-61 p-8 px-16 bg-linear-to-r ${aqiThemes[review].gradient} relative overflow-hidden`} >
-                    <div >
-                        <img className="absolute opacity-15 top-16 left-40 animate-[drift_90s_linear_infinite]" src="/cloud1.png"/>
-                        <img className="absolute opacity-15 top-15 right-40 animate-[drift_70s_linear_infinite]" src="/cloud2.png"/>
-                        <img className="absolute opacity-15 top-0 right-0 animate-[drift_110s_linear_infinite]" src="/cloud3.png"/>
+                <div className={`border rounded-2xl h-61 bg-linear-to-r ${aqiThemes[review].gradient} relative overflow-hidden`} >
+                    <div className="m-8 mx-14">
+                        <div >
+                            <img className="absolute opacity-15 top-16 left-40 animate-[drift_90s_linear_infinite]" src="/cloud1.png"/>
+                            <img className="absolute opacity-15 top-15 right-40 animate-[drift_70s_linear_infinite]" src="/cloud2.png"/>
+                            <img className="absolute opacity-15 top-0 right-0 animate-[drift_110s_linear_infinite]" src="/cloud3.png"/>
+                        </div>
+                        <div className="flex">
+                            <div className="text-8xl flex items-baseline">
+                                <CountUp
+                                    key={aqiValue}
+                                    end={aqiValue}
+                                    duration=   {2}
+                                    enableScrollSpy
+                                />
+                                <div className="text-lg text-gray-200">
+                                    AQI (US)
+                                </div>
+                            </div>
+                            <div className="flex flex-col ml-auto mt-4 items-center">
+                                <div>Air Quality is:</div>
+                                <div className="border rounded-lg px-12 flex text-2xl flex-1 justify-center items-center">{aqiThemes[review].label}</div>
+                            </div>
+                        </div>
+                        <div className="flex text-xl mt-1">
+                            <div><span className="text-gray-200" >PM2.5: </span> {dataAqi.list[0].components.pm2_5}</div>
+                            <div className="ml-auto"><span className="text-gray-200">PM10: </span> {dataAqi.list[0].components.pm10}</div>
+                        </div>
+                        
+                        <div className=" flex flex-col py-6 z-0">
+                            <div className="flex text-sm">
+                                <div className="flex-1 flex justify-center">Good</div>
+                                <div className="flex-1 flex justify-center">Moderate</div>
+                                <div className="flex-1 flex justify-center">Poor</div>
+                                <div className="flex-1 flex justify-center">Unhealthy</div>
+                                <div className="flex-1 flex justify-center">Severe</div>
+                                <div className="flex-1 flex justify-center">Hazardous</div>
+                            </div>
+                            <div className="flex h-1 relative">
+                                <div className="bg-[#4FBA1B] flex-1"></div>
+                                <div className="bg-[#F0CA2A] flex-1"></div>
+                                <div className="bg-[#ED852B] flex-1"></div>
+                                <div className="bg-[#E9426D] flex-1"></div>
+                                <div className="bg-[#A734B8] flex-1"></div>
+                                <div className="bg-[#C81332] flex-1"></div>
+                                <div className={`rounded-4xl bg-white  h-2 w-2 absolute shadow-[0_0_10px_2px_rgba(0,0,0,0.5)] z-10 -top-0.5`}
+                                    style={{
+                                        left : `${getPointerPosition()}%`
+                                    }}
+                                ></div>
+                            </div>
                     </div>
-                    <div className="flex">
-                        <div className="text-8xl flex items-baseline">
-                            {aqiValue ?? "N/A"}
-                            <div className="text-lg text-gray-200">AQI(US)</div>
-                        </div>
-                        <div className="flex flex-col ml-auto mt-4 items-center">
-                            <div>Air Quality is:</div>
-                            <div className="border rounded-lg px-15 flex text-2xl flex-1 justify-center items-center">{aqiThemes[review].label}</div>
-                        </div>
-                    </div>
-                    <div className="flex text-xl mt-1">
-                        <div><span className="text-gray-200" >PM2.5: </span> {dataAqi.list[0].components.pm2_5}</div>
-                        <div className="ml-auto"><span className="text-gray-200">PM10: </span> {dataAqi.list[0].components.pm10}</div>
-                    </div>
-                    
-                    <div className=" flex flex-col py-6 z-0">
-                        <div className="flex text-sm">
-                            <div className="flex-1 flex justify-center">Good</div>
-                            <div className="flex-1 flex justify-center">Moderate</div>
-                            <div className="flex-1 flex justify-center">Poor</div>
-                            <div className="flex-1 flex justify-center">Unhealthy</div>
-                            <div className="flex-1 flex justify-center">Severe</div>
-                            <div className="flex-1 flex justify-center">Hazardous</div>
-                        </div>
-                        <div className="flex h-1 relative">
-                            <div className="bg-[#4FBA1B] flex-1"></div>
-                            <div className="bg-[#F0CA2A] flex-1"></div>
-                            <div className="bg-[#ED852B] flex-1"></div>
-                            <div className="bg-[#E9426D] flex-1"></div>
-                            <div className="bg-[#A734B8] flex-1"></div>
-                            <div className="bg-[#C81332] flex-1"></div>
-                            <div className={`rounded-4xl bg-white  h-2 w-2 absolute shadow-[0_0_10px_2px_rgba(0,0,0,0.5)] z-10 -top-0.5`}
-                                style={{
-                                    left : `${getPointerPosition()}%`
-                                }}
-                            ></div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -24,6 +24,9 @@ import {
 
 import { MdVisibility } from "react-icons/md";
 import { FaTemperatureHigh, FaTemperatureLow } from "react-icons/fa";
+import CountUpModule from "react-countup";
+const CountUp = CountUpModule.default;
+
 
 function WeatherCard({data}){
 
@@ -147,25 +150,48 @@ function WeatherCard({data}){
 
         if(data.main.temp >= 35){
             return (<div className="flex text-5xl items-baseline gap-0 text-red-500 ">
-                        {data.main.temp}
+                        <CountUp
+                                key={data.main.temp}
+                                end={data.main.temp}
+                                duration=   {2}
+                                enableScrollSpy
+                        />
                         <WiCelsius className="p-0 -ml-3"/>
                     </div>)
         }
         if(data.main.temp < 15){
             return (<div className="flex text-5xl items-baseline gap-0 text-sky-400 ">
-                        {data.main.temp}
+                        <CountUp
+                            key={data.main.temp}
+                            end={data.main.temp}
+                            duration=   {2}
+                            enableScrollSpy
+                            decimals = {2}
+                        />
                         <WiCelsius className="p-0 -ml-3"/>
                     </div>)
         }
         if(data.main.temp >= 29 && data.main.temp < 35){
             return (<div className="flex text-5xl items-baseline gap-0 text-orange-500 ">
-                        {data.main.temp}
+                        <CountUp
+                            key={data.main.temp}
+                            end={data.main.temp}
+                            duration=   {2}
+                            enableScrollSpy
+                            decimals = {2}
+                        />
                         <WiCelsius className="p-0 -ml-3"/>
                     </div>)
         }
         if(data.main.temp >= 15 && data.main.temp < 29){
             return (<div className="flex text-5xl items-baseline gap-0 text-green-500 ">
-                        {data.main.temp}
+                        <CountUp
+                            key={data.main.temp}
+                            end={data.main.temp}
+                            duration=   {2}
+                            enableScrollSpy
+                            decimals= {2}
+                        />
                         <WiCelsius className="p-0 -ml-3"/>
                     </div>)
         }
@@ -205,7 +231,7 @@ function WeatherCard({data}){
                         <div className=" iconAndTemperature flex scale-130 items-center h-[30%]" >
                             <WeatherIcon className={`text-9xl ${weatherIconColor} ${weatherAnimation}`}/>
                         
-                            <div className="temp flex flex-col mb-4">
+                            <div className="temp flex flex-col mb-4 w-45">
                                 {temperatureBgColor()}
                                 <div className="flex font-cabinet gap-0">
                                     <h4 className="text-sm">Feels like: <span className="font-tanker font-normal">{data.main.feels_like}</span></h4>
